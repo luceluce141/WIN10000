@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<title>🎁 عجلة الحظ - اكسب جائزتك</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(135deg, #000000, #2c0000);
+      color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .wheel {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 6px solid #ff1744;
+      background: conic-gradient(
+        #ff8a80 0% 6.66%, #ffcdd2 6.66% 13.33%, #ff8a80 13.33% 20%,
+        #ffcdd2 20% 26.66%, #ff8a80 26.66% 33.33%, #ffcdd2 33.33% 40%,
+        #ff8a80 40% 46.66%, #ffcdd2 46.66% 53.33%, #ff8a80 53.33% 60%,
+        #ffcdd2 60% 66.66%, #ff8a80 66.66% 73.33%, #ffcdd2 73.33% 80%,
+        #ff8a80 80% 86.66%, #ffcdd2 86.66% 93.33%, #ff8a80 93.33% 100%
+      );
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      transition: transform 4s ease-out;
+    }
+    .wheel span {
+      position: absolute;
+      font-size: 10px;
+      font-weight: bold;
+      color: #000;
+      transform: rotate(calc((360deg / 15) * var(--i))) translateY(-65px);
+    }
+    .pointer {
+      width: 0;
+      height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 25px solid #ff1744;
+      margin-top: 10px;
+    }
+    .btn {
+      margin: 25px 0;
+      background: #d50000;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .result {
+      font-size: 22px;
+      font-weight: bold;
+      color: #ffeb3b;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: all 0.8s ease;
+    }
+    .result.show {
+      opacity: 1;
+      transform: scale(1.2);
+      animation: pulse 1.5s infinite alternate;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1.1); }
+      100% { transform: scale(1.2); }
+    }
+    .conditions-container {
+      display: none;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s ease;
+      width: 90%;
+      max-width: 450px;
+      background: #1f1f1f;
+      padding: 20px;
+      border-radius: 15px;
+      border: 2px solid #ff1744;
+      margin-top: 30px;
+    }
+    .conditions-container.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    ul {
+      text-align: right;
+      padding-right: 20px;
+    }
+    ul li {
+      margin-bottom: 10px;
+      list-style: none;
+      position: relative;
+      padding-right: 20px;
+    }
+    ul li::before {
+      content: "✅";
+      position: absolute;
+      right: 0;
+      color: #00e676;
+    }
+    .verify-status {
+      margin-top: 15px;
+      font-size: 15px;
+      font-weight: bold;
+      color: #ffd54f;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease;
+    }
+    .verify-status.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .verify-status.warning {
+      color: #ff5252;
+    }
+    .download-app-btn, .copy-code-btn {
+      margin-top: 10px;
+      background: linear-gradient(to right, #d50000, #b71c1c);
+      color: white;
+      padding: 10px 20px;
+      font-size: 14px;
+      border-radius: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.3s ease;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+    .download-app-btn:hover, .copy-code-btn:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+<h2 id="mainTitle" style="margin-bottom: 10px;">💥 دلوقتي فرصتك تكسب فوق إيداعك فلوس حقيقية</h2>
+<p id="subTitleLine" style="font-size: 16px; color: #f2f2f2; margin-top: 0; margin-bottom: 15px;">🎲 لف العجلة… واكسب لحد <strong style="color:#ffeb3b;">600 جنيه كاش</strong> على الـ ID في تطبيق 888!</p>
+<div id="countdownTimer" style="font-size: 15px; color: #ff5252; margin-bottom: 20px;">
+      ⏳ العرض متاح لمدة: <span id="timer">01:00</span>
+</div>
+<div class="pointer" id="pointer"></div>
+<div class="wheel" id="wheel">
+<span style="--i:0">💰 80ج</span><span style="--i:1">💰 150ج</span><span style="--i:2">💰 175ج</span><span style="--i:3">💰 100ج</span><span style="--i:4">💰 125ج</span><span style="--i:5">💰 150ج</span><span style="--i:6">💰 175ج</span><span style="--i:7">💰 200ج</span><span style="--i:8">💰 225ج</span><span style="--i:9">💰 250ج</span><span style="--i:10">💰 175ج</span><span style="--i:11">💰 100ج</span><span style="--i:12">💰 125ج</span><span style="--i:13">💰 150ج</span><span style="--i:14">💰 175ج</span>
+</div>
+<button class="btn" id="spinBtn" onclick="spinWheel()">لف العجلة</button>
+<div class="result" id="resultText"></div>
+<div id="fakeCounter" style="display:none;margin-top:10px;color:#aaa;font-size:15px;">🔢 تم شحن المكافأة لـ <span id="countNum">37</span> شخص لحد دلوقتي</div>
+<div class="conditions-container" id="conditionsBox" style="">
+<h3>📋 اكمل الشروط أولا للحصول على المكافأة:</h3>
+<ul>
+<li>حمّل التطبيق وسجل بالكود <strong style="color:#ff5252">BL200</strong></li>
+<li>اعمل إيداع عالتطبيق بـ200ج أو أكتر (مش أقل)</li>
+<li>خد الـ ID بتاعك كوبي، دخله في الخانة اللي تحت</li>
+<li>ومبروك عليك المكافأة ✨</li>
+</ul>
+<div>
+<a class="download-app-btn" href="https://chill2win.fun/L?tag=d_4272540m_72473c_&amp;site=4272540&amp;ad=72473" target="_blank">📲 تحميل التطبيق</a>
+<button class="copy-code-btn" onclick="copyCode()">📋 نسخ البروموكود</button>
+</div>
+<p style="font-size:13px; color:#ccc; margin-top:25px; background:#2c2c2c; padding:10px 15px; border-radius:10px; line-height:1.8;">
+      💬 بعد ما تتحقق من الشروط، هبص على الـ ID بتاعك بنفسي وأكمل الإجراءات<br/>
+      💡 ده مش أوتوماتيك... أنا اللي هراجع الطلب بنفسي ✍️
+    </p>
+<div style="margin-top: 20px;">
+<input id="userIdInput" placeholder="ادخل ID بتاعك" style="padding:10px;border-radius:6px;width:220px;text-align:center;border:1px solid #e53935;background:#1f1f1f;color:#fff;" type="text"/>
+<br/><br/>
+<label style="font-size:14px;">
+<input id="confirmCheckbox" type="checkbox"/> أؤكد أنني استوفيت كل الشروط المطلوبة
+    </label>
+<br/>
+<button class="btn" onclick="verifyID()">ارسال</button>
+</div>
+<div class="verify-status" id="verifyStep1" style="font-size: 13px; color: #ccc; margin-top: 10px;">⏳ بنراجع بياناتك يدويًا... لو مستوفي الشروط، بنشحنلك يدوي خلال ساعات</div>
+<div class="verify-status" id="verifyStep2">🔄 جاري إضافة المكافأة إلى حسابك (المراجعة بتاخد من 1 ساعة إلى 6 ساعات)</div>
+<div class="verify-status warning" id="verifyStep3" style="font-size: 12px; color: #ff5252; margin-top: 5px;">⚠️ لن يتم تحويل قيمة المكافأة إلا بعد استكمال الشروط بالكامل  </div>
+</div>
+<script>
+  const prizes = [
+    "💰 80ج", "💰 150ج", "💰 175ج", "💰 100ج", "💰 125ج",
+    "💰 150ج", "💰 175ج", "💰 200ج", "💰 225ج", "💰 250ج",
+    "💰 175ج", "💰 100ج", "💰 125ج", "💰 150ج", "💰 175ج"
+  ];
+
+  function spinWheel() {
+    const wheel = document.getElementById("wheel");
+    const resultText = document.getElementById("resultText");
+    const spinBtn = document.getElementById("spinBtn");
+    const title = document.getElementById("mainTitle");
+    const pointer = document.getElementById("pointer");
+    const conditionsBox = document.getElementById("conditionsBox");
+
+    const selectedIndex = Math.floor(Math.random() * prizes.length);
+    const anglePerPrize = 360 / prizes.length;
+    const rotation = 360 * 5 + (selectedIndex * anglePerPrize);
+    wheel.style.transform = `rotate(${rotation}deg)`;
+
+    setTimeout(() => {
+      wheel.style.display = 'none';
+      spinBtn.style.display = 'none';
+      title.style.display = 'none';
+      pointer.style.display = 'none';
+
+      resultText.textContent = `🎉 مبروك! جائزتك: ${prizes[selectedIndex]}`;
+      resultText.classList.add("show");
+
+      conditionsBox.classList.add("show");
+      document.getElementById("fakeCounter").style.display = "block";
+      document.getElementById("countdownTimer").style.display = "none";
+      document.getElementById("mainTitle").style.display = "none"; document.getElementById("subTitleLine").style.display = "none";
+      let num = 37;
+      setInterval(() => {
+        num++;
+        document.getElementById("countNum").innerText = num;
+      }, 6000);
+    
+    }, 4500);
+  }
+
+  function verifyID() {
+    const checkbox = document.getElementById("confirmCheckbox");
+    const step1 = document.getElementById("verifyStep1");
+    const step2 = document.getElementById("verifyStep2");
+    const step3 = document.getElementById("verifyStep3");
+
+    if (!checkbox.checked) {
+      alert("من فضلك أكد أنك استوفيت الشروط أولاً ✅");
+      return;
+    }
+
+    step1.classList.add("show");
+    setTimeout(() => step2.classList.add("show"), 4000);
+    setTimeout(() => step3.classList.add("show"), 8000);
+  }
+
+  function copyCode() {
+    navigator.clipboard.writeText("BL200");
+    alert("✅ تم نسخ البروموكود!");
+  }
+
+    // Countdown Timer Logic
+    let totalSeconds = 60;
+    const timerDisplay = document.getElementById("timer");
+    const countdownInterval = setInterval(() => {
+      totalSeconds--;
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      timerDisplay.textContent = (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+      if (totalSeconds <= 0) clearInterval(countdownInterval);
+    }, 1000);
+    </script>
+</body>
+</html>
