@@ -1,12 +1,11 @@
 
 <!DOCTYPE html>
-
 <html dir="rtl" lang="ar">
 <head>
 <meta charset="utf-8"/>
 <title>🎁 عجلة الحظ - اكسب جائزتك</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700&display=swap" rel="stylesheet"/>
 <style>
     * { box-sizing: border-box; }
     body {
@@ -147,11 +146,24 @@
       transition: transform 0.3s ease;
       margin-left: 5px;
       margin-right: 5px;
+      position: relative;
     }
     .download-app-btn:hover, .copy-code-btn:hover {
       transform: scale(1.05);
     }
-  </style>
+    .counter-label {
+      position: absolute;
+      bottom: -22px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #333;
+      color: #fff;
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 12px;
+      white-space: nowrap;
+    }
+</style>
 </head>
 <body>
 <h2 id="mainTitle" style="margin-bottom: 10px;">💥 دلوقتي فرصتك تكسب فوق إيداعك فلوس حقيقية</h2>
@@ -166,7 +178,7 @@
 <button class="btn" id="spinBtn" onclick="spinWheel()">لف العجلة</button>
 <div class="result" id="resultText"></div>
 <div id="fakeCounter" style="display:none;margin-top:10px;color:#aaa;font-size:15px;">🔢 تم شحن المكافأة لـ <span id="countNum">37</span> شخص لحد دلوقتي</div>
-<div class="conditions-container" id="conditionsBox" style="">
+<div class="conditions-container" id="conditionsBox">
 <h3>📋 اكمل الشروط أولا للحصول على المكافأة:</h3>
 <ul>
 <li>حمّل التطبيق وسجل بالكود <strong style="color:#ff5252">BL200</strong></li>
@@ -175,19 +187,17 @@
 <li>ومبروك عليك المكافأة ✨</li>
 </ul>
 <div>
-<a class="download-app-btn" href="https://chill2win.fun/L?tag=d_4272540m_72473c_&amp;site=4272540&amp;ad=72473" target="_blank">📲 تحميل التطبيق</a>
-<button class="copy-code-btn" onclick="copyCode()">📋 نسخ البروموكود</button>
+<a class="download-app-btn" href="https://chill2win.fun/L?tag=d_4272540m_72473c_&site=4272540&ad=72473" target="_blank">📲 تحميل التطبيق<div class="counter-label">📥 2,713 تحميل</div></a>
+<button class="copy-code-btn" onclick="copyCode()">📋 نسخ البروموكود<div class="counter-label">📌 1,844 نسخ</div></button>
 </div>
 <p style="font-size:13px; color:#ccc; margin-top:25px; background:#2c2c2c; padding:10px 15px; border-radius:10px; line-height:1.8;">
       💬 بعد ما تتحقق من الشروط، هبص على الـ ID بتاعك بنفسي وأكمل الإجراءات<br/>
       💡 ده مش أوتوماتيك... أنا اللي هراجع الطلب بنفسي ✍️
-    </p>
+</p>
 <div style="margin-top: 20px;">
 <input id="userIdInput" placeholder="ادخل ID بتاعك" style="padding:10px;border-radius:6px;width:220px;text-align:center;border:1px solid #e53935;background:#1f1f1f;color:#fff;" type="text"/>
 <br/><br/>
-<label style="font-size:14px;">
-<input id="confirmCheckbox" type="checkbox"/> أؤكد أنني استوفيت كل الشروط المطلوبة
-    </label>
+<label style="font-size:14px;"><input id="confirmCheckbox" type="checkbox"/> أؤكد أنني استوفيت كل الشروط المطلوبة</label>
 <br/>
 <button class="btn" onclick="verifyID()">ارسال</button>
 </div>
@@ -197,9 +207,9 @@
 </div>
 <script>
   const prizes = [
-    "💰 280ج", "💰 250ج", "💰 275ج", "💰 215ج", "💰 225ج",
-    "💰 250ج", "💰 265ج", "💰 220ج", "💰 225ج", "💰 235ج",
-    "💰 275ج", "💰 245ج", "💰 225ج", "💰 255ج", "💰 275ج"
+    "💰 80ج", "💰 150ج", "💰 175ج", "💰 100ج", "💰 125ج",
+    "💰 150ج", "💰 175ج", "💰 200ج", "💰 225ج", "💰 250ج",
+    "💰 175ج", "💰 100ج", "💰 125ج", "💰 150ج", "💰 175ج"
   ];
 
   function spinWheel() {
@@ -227,13 +237,14 @@
       conditionsBox.classList.add("show");
       document.getElementById("fakeCounter").style.display = "block";
       document.getElementById("countdownTimer").style.display = "none";
-      document.getElementById("mainTitle").style.display = "none"; document.getElementById("subTitleLine").style.display = "none";
+      document.getElementById("subTitleLine").style.display = "none";
+
       let num = 37;
       setInterval(() => {
         num++;
         document.getElementById("countNum").innerText = num;
       }, 6000);
-    
+
     }, 4500);
   }
 
@@ -258,16 +269,41 @@
     alert("✅ تم نسخ البروموكود!");
   }
 
-    // Countdown Timer Logic
-    let totalSeconds = 60;
-    const timerDisplay = document.getElementById("timer");
-    const countdownInterval = setInterval(() => {
-      totalSeconds--;
-      const minutes = Math.floor(totalSeconds / 60);
-      const seconds = totalSeconds % 60;
-      timerDisplay.textContent = (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-      if (totalSeconds <= 0) clearInterval(countdownInterval);
-    }, 1000);
-    </script>
+  // Countdown Timer
+  let totalSeconds = 60;
+  const timerDisplay = document.getElementById("timer");
+  const countdownInterval = setInterval(() => {
+    totalSeconds--;
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    timerDisplay.textContent = (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+    if (totalSeconds <= 0) clearInterval(countdownInterval);
+  }, 1000);
+
+  let downloadCount = 1713;
+  let copyCount = 1844;
+
+  const downloadLabel = document.querySelector('.download-app-btn .counter-label');
+  const copyLabel = document.querySelector('.copy-code-btn .counter-label');
+
+  // Update both counters every 5 seconds instead of 3
+  setInterval(() => {
+    if (Math.random() < 0.5) {
+      downloadCount++;
+      downloadLabel.textContent = `📥 ${downloadCount} تحميل`;
+    } else {
+      copyCount++;
+      copyLabel.textContent = `📌 ${copyCount} نسخ`;
+    }
+  }, 5000);
+
+  // Also increase copy count on actual copy
+  function copyCode() {
+    navigator.clipboard.writeText("BL200");
+    alert("✅ تم نسخ البروموكود!");
+    copyCount++;
+    copyLabel.textContent = `📌 ${copyCount} نسخ`;
+  }
+</script>
 </body>
 </html>
