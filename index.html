@@ -7,6 +7,17 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700&display=swap" rel="stylesheet"/>
 <style>
+@media (max-width: 600px) {
+  body { padding: 10px; }
+  h2, p { font-size: 14px !important; }
+  .conditions-container { padding: 15px; margin-top: 20px; }
+  .btn, .download-app-btn, .copy-code-btn, .telegram-btn { font-size: 12px !important; padding: 8px 14px !important; width: 90% !important; }
+  .counter-label { font-size: 10px !important; }
+  .result { font-size: 18px !important; }
+  input#userIdInput { width: 90% !important; padding: 8px !important; font-size: 13px; }
+  label { font-size: 12px !important; }
+  .verify-status { font-size: 12px !important; }
+}
     * { box-sizing: border-box; }
     body {
       margin: 0;
@@ -187,8 +198,19 @@
 <li>ومبروك عليك المكافأة ✨</li>
 </ul>
 <div>
-<a class="download-app-btn" href="https://chill2win.fun/L?tag=d_4272540m_72473c_&site=4272540&ad=72473" target="_blank">📲 تحميل التطبيق<div class="counter-label">📥 2,713 تحميل</div></a>
-<button class="copy-code-btn" onclick="copyCode()">📋 نسخ البروموكود<div class="counter-label">📌 1,844 نسخ</div></button>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 15px;">
+  <button class="copy-code-btn" onclick="copyCode()" style="width: 220px; font-size: 13px;">
+    📋 نسخ البروموكود<div class="counter-label">📌 1,844 نسخ</div>
+  </button>
+  <a class="download-app-btn" href="https://chill2win.fun/L?tag=d_4272540m_72473c_&site=4272540&ad=72473"
+     target="_blank" style="width: 220px; font-size: 13px;">
+    📲 تحميل التطبيق<div class="counter-label">📥 2,713 تحميل</div>
+  </a>
+  <a class="download-app-btn" href="https://t.me/Gassersaad1" target="_blank"
+     style="width: 220px; font-size: 13px; background: #0088cc;">
+    💬 كلمني على تيلجرام
+  </a>
+</div>
 </div>
 <p style="font-size:13px; color:#ccc; margin-top:25px; background:#2c2c2c; padding:10px 15px; border-radius:10px; line-height:1.8;">
       💬 بعد ما تتحقق من الشروط، هبص على الـ ID بتاعك بنفسي وأكمل الإجراءات<br/>
